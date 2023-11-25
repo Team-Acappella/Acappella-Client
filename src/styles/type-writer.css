@@ -1,0 +1,15 @@
+@keyframes textAppear {
+    0% { fill: transparent; /*font-size: 36px;*/ }
+    100% { fill: #03492b; /*font-size: 54px;*/}
+}
+  
+.typewritter {
+    font-size: 54px;
+    font-weight: 700;
+}
+
+.typewritter tspan {
+    display: block;
+    fill: transparent;
+    animation: textAppear 3s forwards;
+}
