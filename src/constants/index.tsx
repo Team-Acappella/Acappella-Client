@@ -2,7 +2,11 @@ import {
   professorImageMap,
   professorResizedImageMap,
 } from '../assets/professors';
-import { ProfessorInfoType, ProfessorType } from '../types';
+import {
+  ExampleQuestionInfoType,
+  ProfessorInfoType,
+  ProfessorType,
+} from '../types';
 
 export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
   [ProfessorType.AHN]: {
@@ -79,6 +83,7 @@ export const professorsTypeArray: ProfessorType[] = [
   ProfessorType.PARK,
   ProfessorType.AHN,
 ];
+
 export const professorsArray: ProfessorInfoType[] = [
   professorsMap[ProfessorType.RYU],
   professorsMap[ProfessorType.JANG],
@@ -88,3 +93,18 @@ export const professorsArray: ProfessorInfoType[] = [
   professorsMap[ProfessorType.PARK],
   professorsMap[ProfessorType.AHN],
 ];
+
+export const questionsMap: Record<ProfessorType, ExampleQuestionInfoType[]> = {
+  [ProfessorType.RYU]: [
+    { index: 0, question: '운영체제가 무엇인가요?' },
+    { index: 1, question: '텀프로젝트 제출 마감 기한은 언제인가요?' },
+    { index: 2, question: '힙과 스택의 차이점이 궁금해요' },
+    { index: 3, question: 'Shared Memory를 어떻게 사용할 수 있나요?' },
+  ],
+  [ProfessorType.JANG]: [],
+  [ProfessorType.RYANG]: [],
+  [ProfessorType.OAK]: [],
+  [ProfessorType.JAE]: [],
+  [ProfessorType.PARK]: [],
+  [ProfessorType.AHN]: [],
+};

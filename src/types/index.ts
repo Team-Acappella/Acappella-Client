@@ -17,3 +17,15 @@ export type ProfessorInfoType = {
   imageResizedSrc: string;
   intro: string;
 };
+
+export type ExampleQuestionMediaType = {
+  videoSrc: string;
+  audioSrc: string;
+  subtitle: string;
+};
+
+export type ExampleQuestionInfoType = {
+  index: number;
+  question: string;
+  answer?: ExampleQuestionMediaType; // TODO : fill example answers
+};

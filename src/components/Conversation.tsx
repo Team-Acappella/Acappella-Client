@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   Image,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,8 +14,9 @@ import {
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import React from 'react';
+import { RxTriangleRight } from 'react-icons/rx';
 import imgBgConversation from '../assets/img_conversation_bg.jpeg';
-import { professorsMap } from '../constants';
+import { professorsMap, questionsMap } from '../constants';
 import { ProfessorType } from '../types';
 import { colors } from '../utils/colors';
 
@@ -27,6 +29,8 @@ type ConversationProps = {
 
 const Conversation = (props: ConversationProps) => {
   const professor = professorsMap[props.selectedProfessorType];
+  const exampleQuestions = questionsMap[props.selectedProfessorType];
+
   return (
     <Modal
       isOpen
@@ -48,16 +52,21 @@ const Conversation = (props: ConversationProps) => {
           >
             <Image
               src={professor.imageSrc}
-              h='60vh'
+              h='64vh'
               objectFit='contain'
               alignSelf='flex-end'
             />
           </Flex>
-          <Flex flexDirection='column' align='center' marginTop='-160px'>
+          <Flex
+            flexDirection='column'
+            align='center'
+            marginTop='-260px'
+            gap='8px'
+          >
             <Flex
               bg='linear-gradient(45deg, #bad3b4, #d8f3d1)'
               w='92%'
-              h='120px'
+              h='80px'
               p='16px'
               pt='20px'
               borderRadius='4px'
@@ -87,8 +96,40 @@ const Conversation = (props: ConversationProps) => {
                 </Text>
               </motion.div>
             </Flex>
+            {exampleQuestions.length > 0 && (
+              <Flex
+                bg='linear-gradient(45deg, #bad3b4, #d8f3d1)'
+                w='92%'
+                p='16px'
+                pt='20px'
+                borderRadius='4px'
+                flexDirection='column'
+                gap='8px'
+              >
+                <SimpleGrid columns={2} spacing={4}>
+                  {exampleQuestions.map((question) => (
+                    <motion.div
+                      style={{
+                        borderRadius: '8px',
+                        background: 'transparent',
+                        cursor: 'pointer',
+                        padding: '4px',
+                        display: 'flex',
+                        gap: '6px',
+                        alignItems: 'center',
+                      }}
+                      whileHover={{ background: 'rgba(256,256,256,0.4)' }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <RxTriangleRight size={20} />
+                      <span>{question.question}</span>
+                    </motion.div>
+                  ))}
+                </SimpleGrid>
+                <Input placeholder='직접 입력' bg='rgba(256,256,256,0.4)' />
+              </Flex>
+            )}
           </Flex>
-          <SimpleGrid></SimpleGrid>
         </ModalBody>
       </ModalContent>
     </Modal>
