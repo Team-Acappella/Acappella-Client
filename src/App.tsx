@@ -1,5 +1,7 @@
 import { Box, ChakraProvider, Flex } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import bgSkku from './assets/bg_skku.jpeg';
 import Conversation from './components/Conversation';
 import { Header } from './components/Header';
 import Intro from './components/Intro';
@@ -57,6 +59,19 @@ function App() {
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
+        <motion.div
+          style={{
+            height: '100vh',
+            width: '100vw',
+            filter: 'grayscale(0.6) contrast(0.75)',
+            position: 'absolute',
+            top: 0,
+            zIndex: -1,
+            backgroundImage: `url(${bgSkku})`,
+          }}
+          animate={page === 2 ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 1 }}
+        />
         <Header />
         <Intro />
         <Box ref={firstPageRef} />
@@ -66,9 +81,7 @@ function App() {
         </Flex>
         <Box
           h='100vh'
-          pt='96px'
-          pl='12px'
-          pr='12px'
+          position='relative'
           boxSizing='border-box'
           ref={secondPageRef}
         >
