@@ -7,7 +7,6 @@ import { Header } from './components/Header';
 import Intro from './components/Intro';
 import ProfessorCard from './components/ProfessorCard';
 import Professors from './components/Professors';
-import Recommend from './components/Recommend';
 import { professorsArray } from './constants';
 import { ProfessorType } from './types';
 import useScrollPage from './utils/useScrollPage';
@@ -75,8 +74,13 @@ function App() {
         <Header />
         <Intro />
         <Box ref={firstPageRef} />
-        <Recommend />
-        <Flex justify='center' position='relative' zIndex='-1'>
+        <Flex
+          justify='center'
+          align='center'
+          position='relative'
+          zIndex='-1'
+          h='100vh'
+        >
           <Professors />
         </Flex>
         <Box

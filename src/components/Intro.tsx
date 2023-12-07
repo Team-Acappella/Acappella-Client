@@ -2,6 +2,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import imgIntro from '../assets/img-intro.png';
 import '../styles/type-writer.css';
+import Recommend from './Recommend';
 
 const Typewriter = ({ content }: { content: string }) => {
   // 각 글자를 span 태그로 분리하여 배열로 생성합니다.
@@ -38,7 +39,7 @@ const Intro = () => {
   return (
     <Flex
       marginTop='70px'
-      h='calc(100vh - 272px)'
+      h='calc(100vh - 70px)'
       flexDirection='column'
       justifyContent='center'
       alignItems='center'
@@ -75,10 +76,11 @@ const Intro = () => {
             opacity: [0, 1],
             translateY: [-20, 0],
           }}
-          width='320px'
+          width='280px'
           src={imgIntro}
         />
       </Flex>
+      <Recommend />
     </Flex>
   );
 };
