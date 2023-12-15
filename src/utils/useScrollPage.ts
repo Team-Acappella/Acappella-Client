@@ -1,18 +1,19 @@
 import throttle from 'lodash/throttle';
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-const useScrollPage = (maxPage: number) => {
+const useScrollPage = (maxPage: number, forceFreeze: boolean) => {
   const [page, setPage] = useState(0);
 
   const onWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
+      if (forceFreeze) return;
       if (e.deltaY > 0.2) {
         setPage((prev) => Math.min(prev + 1, maxPage - 1));
       } else if (e.deltaY < -0.2) {
         setPage((prev) => Math.max(prev - 1, 0));
       }
     },
-    [maxPage]
+    [maxPage, forceFreeze]
   );
 
   const throttleWheel = useMemo(
@@ -23,10 +24,12 @@ const useScrollPage = (maxPage: number) => {
   const lastTouchYRef = useRef<number | undefined>(undefined);
 
   const onTouchStart = (e: React.TouchEvent) => {
+    if (forceFreeze) return;
     lastTouchYRef.current = e.touches[0]?.clientY;
   };
 
   const onTouchEnd = (e: React.TouchEvent) => {
+    if (forceFreeze) return;
     if (lastTouchYRef.current) {
       const touchEnd = e.changedTouches[0]?.clientY;
       if (touchEnd) {

@@ -15,7 +15,10 @@ function App() {
   const [selectedProfessorType, setSelectedProfessorType] = useState<
     ProfessorType | undefined
   >(undefined);
-  const { page, throttleWheel, onTouchStart, onTouchEnd } = useScrollPage(3);
+  const { page, throttleWheel, onTouchStart, onTouchEnd } = useScrollPage(
+    3,
+    selectedProfessorType !== undefined
+  );
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const firstPageRef = useRef<HTMLDivElement>(null);
@@ -25,7 +28,6 @@ function App() {
     if (!wrapperRef.current) return;
     if (!firstPageRef.current) return;
     if (!secondPageRef.current) return;
-    console.log(page);
     switch (page) {
       case 0:
         wrapperRef.current.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

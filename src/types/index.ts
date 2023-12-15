@@ -18,7 +18,7 @@ export type ProfessorInfoType = {
   intro: string;
 };
 
-export type ExampleQuestionMediaType = {
+export type QuestionMediaType = {
   videoSrc: string;
   audioSrc: string;
   subtitle: string;
@@ -27,5 +27,5 @@ export type ExampleQuestionMediaType = {
 export type ExampleQuestionInfoType = {
   index: number;
   question: string;
-  answer?: ExampleQuestionMediaType; // TODO : fill example answers
+  answer?: QuestionMediaType; // TODO : fill example answers
 };
