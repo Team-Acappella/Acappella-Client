@@ -99,7 +99,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
 
 export const professorsTypeArray: ProfessorType[] = [
   ProfessorType.RYU,
-  //ProfessorType.JANG,
+  ProfessorType.JANG,
   ProfessorType.RYANG,
   ProfessorType.OAK,
   ProfessorType.JAE,
@@ -109,7 +109,7 @@ export const professorsTypeArray: ProfessorType[] = [
 
 export const professorsArray: ProfessorInfoType[] = [
   professorsMap[ProfessorType.RYU],
-  //professorsMap[ProfessorType.JANG],
+  professorsMap[ProfessorType.JANG],
   professorsMap[ProfessorType.RYANG],
   professorsMap[ProfessorType.OAK],
   professorsMap[ProfessorType.JAE],
@@ -174,12 +174,36 @@ export const questionsMap: Record<ProfessorType, ExampleQuestionInfoType[]> = {
       answer: {
         subtitle:
           '데이터를 찾을 확률은 문제에서 주어집니다. 현실적으로는 캐시 미스를 카운트 하는 툴이 있어서 그 툴을 사용해서 실제로 미스 확률을 계산합니다.',
-        videoSrc: '/examples/jang_0.mp4',
+        videoSrc: '/examples/jang_1.mp4',
       },
     },
-    { index: 1, question: DUMMY_QUESTION, answer: DUMMY_ANSWER() },
-    { index: 2, question: DUMMY_QUESTION, answer: DUMMY_ANSWER() },
-    { index: 3, question: DUMMY_QUESTION, answer: DUMMY_ANSWER() },
+    { 
+      index: 1, 
+      question: "단일 캐시가 아니라 L1, L2, L3 캐시가 있다고 할 때 L1 캐시에 10개 중 3개의 miss가 있고, L2 캐시에 2개의 miss가 있다고 하면 주기억장치에는 2회만 접근하면 되기 때문에 miss penalty가 감소해서 효율적인가요?", 
+      answer: {
+        subtitle:
+          'L1, L2, L3 캐시 모두에 데이터가 없는 경우에는, L1, L2, L3를 확인한 후 주기억장치를 접근해야 하기 때문에 주기억 장치를 바로 접근하는 경우보다 데이터 접근 딜레이가 더 길어집니다.. 어떤 방식이 효율적인 지는 L1, L2, L3, 주기억장치 각각의 접근 딜레이와, 각 캐시의 미스 확률을 알아야 계산 가능합니다.',
+        videoSrc: '/examples/jang_2.mp4',
+      },
+    },
+    { 
+      index: 2, 
+      question: "원하는 data를 찾을 확률을 안다면 확률에 따라 캐시를 지우면 되겠지만, 확률을 알 수 없다면 캐시가 무조건 여러 단계로 있는 게 좋다고 생각하는데, 제가 맞게 생각하고 있는 건가요?", 
+      answer: {
+        subtitle:
+          '접근 딜레이와 미스 확률에 따라 효율적인 캐시 구조가 정해집니다.',
+        videoSrc: '/examples/jang_3.mp4',
+      },
+    },
+    { 
+      index: 3, 
+      question: "교안 25페이지에서, 캐시의 Tag 부분을 보면 00이 있고, 캐시의 Tag 부분을 보면 00이 있고, 16이 있고 다시 또 16이 있고, FF가 있는데, 이들이 무엇을 의미하는지 잘 모르겠습니다. Main memory address에서 8-bit 짜리 Tag가 있는 것은 확인하였지만 그래도 잘 이해가 되지 않습니다.", 
+      answer: {
+        subtitle:
+          '해당 내용이 [직접-사상 캐시 조직] 페이지에 있습니다.. 전체 주소 필드에서 Tag 부분이 00, 16, ... 등이 됩니다.. 해당 값을 정하는 규칙은 s-r 입니다. 즉, 전체 주소필드에서 r부분과 w부분을 뺀 나머지 입니다.',
+        videoSrc: '/examples/jang_4.mp4',
+      },
+    },
   ],
   [ProfessorType.RYANG]: [
     {
