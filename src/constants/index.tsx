@@ -99,7 +99,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
 
 export const professorsTypeArray: ProfessorType[] = [
   ProfessorType.RYU,
-  ProfessorType.JANG,
+  //ProfessorType.JANG,
   ProfessorType.RYANG,
   ProfessorType.OAK,
   ProfessorType.JAE,
@@ -109,7 +109,7 @@ export const professorsTypeArray: ProfessorType[] = [
 
 export const professorsArray: ProfessorInfoType[] = [
   professorsMap[ProfessorType.RYU],
-  professorsMap[ProfessorType.JANG],
+  //professorsMap[ProfessorType.JANG],
   professorsMap[ProfessorType.RYANG],
   professorsMap[ProfessorType.OAK],
   professorsMap[ProfessorType.JAE],
