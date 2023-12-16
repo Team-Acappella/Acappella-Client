@@ -15,6 +15,7 @@ export type ProfessorInfoType = {
   mainSubject: string;
   imageSrc: string;
   imageResizedSrc: string;
+  imageFixedSrc: string;
   intro: string;
   videoLoadingSrc: string;
   serverId: number;

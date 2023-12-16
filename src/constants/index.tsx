@@ -1,4 +1,5 @@
 import {
+  professorFixedImageMap,
   professorImageMap,
   professorResizedImageMap,
 } from '../assets/professors';
@@ -17,6 +18,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
     mainSubject: '컴퓨터네트워크',
     imageSrc: professorImageMap[ProfessorType.AHN],
     imageResizedSrc: professorResizedImageMap[ProfessorType.AHN],
+    imageFixedSrc: professorFixedImageMap[ProfessorType.AHN],
     intro: '컴퓨터교육과 안성진 교수입니다.',
     videoLoadingSrc: '/examples/ahn_loading.mp4',
     serverId: 7,
@@ -28,6 +30,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
     mainSubject: '데이타베이스',
     imageSrc: professorImageMap[ProfessorType.JAE],
     imageResizedSrc: professorResizedImageMap[ProfessorType.JAE],
+    imageFixedSrc: professorFixedImageMap[ProfessorType.JAE],
     intro: '반갑습니다. 김재현 교수입니다.',
     videoLoadingSrc: '/examples/jae_loading.mp4',
     serverId: 5,
@@ -39,6 +42,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
     mainSubject: '컴퓨터구조',
     imageSrc: professorImageMap[ProfessorType.JANG],
     imageResizedSrc: professorResizedImageMap[ProfessorType.JANG],
+    imageFixedSrc: professorFixedImageMap[ProfessorType.JANG],
     intro: '안녕하세요. 이장원입니다.',
     videoLoadingSrc: '/examples/jang_loading.mp4',
     serverId: 2,
@@ -50,6 +54,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
     mainSubject: '자료구조',
     imageSrc: professorImageMap[ProfessorType.OAK],
     imageResizedSrc: professorResizedImageMap[ProfessorType.OAK],
+    imageFixedSrc: professorFixedImageMap[ProfessorType.OAK],
     intro: '오늘도 행복하시고 건강하세요~',
     videoLoadingSrc: '/examples/oak_loading.mp4',
     serverId: 4,
@@ -61,6 +66,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
     mainSubject: '피지컬컴퓨팅',
     imageSrc: professorImageMap[ProfessorType.PARK],
     imageResizedSrc: professorResizedImageMap[ProfessorType.PARK],
+    imageFixedSrc: professorFixedImageMap[ProfessorType.PARK],
     intro: '안녕하세요, 박천수 교수에요.',
     videoLoadingSrc: '/examples/park_loading.mp4',
     serverId: 6,
@@ -72,6 +78,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
     mainSubject: '컴퓨터교재연구및지도법',
     imageSrc: professorImageMap[ProfessorType.RYANG],
     imageResizedSrc: professorResizedImageMap[ProfessorType.RYANG],
+    imageFixedSrc: professorFixedImageMap[ProfessorType.RYANG],
     intro: '안녕하세요. 김미량쌤입니다.',
     videoLoadingSrc: '/examples/ryang_loading.mp4',
     serverId: 3,
@@ -83,6 +90,7 @@ export const professorsMap: Record<ProfessorType, ProfessorInfoType> = {
     mainSubject: '운영체제',
     imageSrc: professorImageMap[ProfessorType.RYU],
     imageResizedSrc: professorResizedImageMap[ProfessorType.RYU],
+    imageFixedSrc: professorFixedImageMap[ProfessorType.RYU],
     intro: 'All the best, 류은석입니다.',
     videoLoadingSrc: '/examples/ryu_loading.mp4',
     serverId: 1,
@@ -112,7 +120,7 @@ export const professorsArray: ProfessorInfoType[] = [
 export const DUMMY_QUESTION = '등록 전!';
 export const DUMMY_ANSWER = (subtitle?: string): ExampleQuestionMediaType => ({
   subtitle: subtitle ?? '등록 전!',
-  videoSrc: '/examples/jae_0.webm',
+  videoSrc: '/examples/jae_0.mp4',
 });
 
 export const questionsMap: Record<ProfessorType, ExampleQuestionInfoType[]> = {
@@ -335,7 +343,7 @@ export const questionsMap: Record<ProfessorType, ExampleQuestionInfoType[]> = {
       answer: {
         subtitle:
           '아두이노 우노는 간단한 발명품을 만들거나 프로토타이핑을 할 때 매우 적합한 성능을 제공해요.. 14개의 디지털 I/O 핀, 6개의 아날로그 입력 핀, 그리고 마이크로컨트롤러는 충분한 사양을 제공합니다. ',
-        videoSrc: 'examples/park_2.mp4',
+        videoSrc: 'examples/park_3.mp4',
       },
     },
   ],

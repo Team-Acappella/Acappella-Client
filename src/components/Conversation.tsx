@@ -40,11 +40,11 @@ const Conversation = (props: ConversationProps) => {
   const [professorMedia, setProfessorMedia] = useState<{
     type: 'image' | 'video';
     src: string;
-  }>({ type: 'image', src: professor.imageSrc });
+  }>({ type: 'image', src: professor.imageFixedSrc });
 
   const onExampleQuestionClick = (question: ExampleQuestionInfoType) => {
     setIsLoading(true);
-    setProfessorMedia({ type: 'image', src: professor.imageSrc });
+    setProfessorMedia({ type: 'image', src: professor.imageFixedSrc });
     setTimeout(() => {
       setIsLoading(false);
       if (question.answer) setProfessorSentence(question.answer.subtitle);
@@ -60,6 +60,7 @@ const Conversation = (props: ConversationProps) => {
     const customQuestion = customQuestionRef.current?.value;
     if (!customQuestion) return;
     setIsLoading(true);
+    setProfessorSentence('답변을 생성하고 있습니다. 잠시만 기다려 주세요.');
     setProfessorMedia({ type: 'video', src: professor.videoLoadingSrc });
     const createVideoResponse = await axios.post(
       'https://www.aca.o-r.kr/create-video',
@@ -104,14 +105,12 @@ const Conversation = (props: ConversationProps) => {
         // 모든 재시도 실패
         console.log(err);
         setIsLoading(false);
-        setProfessorMedia({ type: 'image', src: professor.imageSrc });
+        setProfessorMedia({ type: 'image', src: professor.imageFixedSrc });
         setProfessorSentence(professor.intro);
         if (customQuestionRef.current) customQuestionRef.current.value = '';
       }
     }
   };
-
-  const videoRef = React.useRef<HTMLVideoElement>(null);
 
   return (
     <Modal
@@ -125,41 +124,52 @@ const Conversation = (props: ConversationProps) => {
         <ModalCloseButton />
         <ModalBody display='flex' w='100%' h='100%' flexDirection='column'>
           {isLoading && (
-            <Spinner
-              thickness='4px'
-              speed='0.65s'
-              emptyColor='gray.200'
-              color='blue.500'
-              size='xl'
+            <Flex
+              w='100%'
+              h='31vh'
               position='absolute'
-            />
+              zIndex='100'
+              justify='center'
+              align='center'
+            >
+              <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+              />
+            </Flex>
           )}
           <Flex
             justify='center'
             bg={`url(${imgBgConversation})`}
             bgColor='#bdbdbd'
-            bgSize='contain'
+            bgSize='cover'
             bgRepeat='no-repeat'
             backgroundPosition='center'
             h='62vh'
           >
             {professorMedia.type == 'video' ? (
               <Box
-                ref={videoRef}
                 as='video'
                 src={professorMedia.src}
                 h='62vh'
+                w='100%'
                 objectFit='contain'
                 alignSelf='flex-end'
                 autoPlay
                 loop={isLoading}
+                backdropFilter='blur(6px)'
               />
             ) : (
               <Image
                 src={professorMedia.src}
-                h='52vh'
+                h='62vh'
+                w='100%'
                 objectFit='contain'
                 alignSelf='flex-end'
+                backdropFilter='blur(6px)'
               />
             )}
           </Flex>
