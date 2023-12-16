@@ -14,16 +14,13 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import axios from 'axios';
 import { motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { RxTriangleRight } from 'react-icons/rx';
 import imgBgConversation from '../assets/img_conversation_bg.jpeg';
 import { professorsMap, questionsMap } from '../constants';
-import {
-  ExampleQuestionInfoType,
-  ProfessorType,
-  QuestionMediaType,
-} from '../types';
+import { ExampleQuestionInfoType, ProfessorType } from '../types';
 import { colors } from '../utils/colors';
 
 type ConversationProps = {
@@ -40,29 +37,81 @@ const Conversation = (props: ConversationProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [professorSentence, setProfessorSentence] = useState(professor.intro);
-  const [professorMedia, setProfessorMedia] = useState<
-    string | QuestionMediaType
-  >(professor.imageSrc);
+  const [professorMedia, setProfessorMedia] = useState<{
+    type: 'image' | 'video';
+    src: string;
+  }>({ type: 'image', src: professor.imageSrc });
 
   const onExampleQuestionClick = (question: ExampleQuestionInfoType) => {
     setIsLoading(true);
-    setProfessorMedia(professor.imageSrc);
+    setProfessorMedia({ type: 'image', src: professor.imageSrc });
     setTimeout(() => {
       setIsLoading(false);
       if (question.answer) setProfessorSentence(question.answer.subtitle);
-      if (question.answer) setProfessorMedia(question.answer);
+      if (question.answer)
+        setProfessorMedia({ type: 'video', src: question.answer.videoSrc });
     }, 1000);
   };
 
   const customQuestionRef = React.useRef<HTMLInputElement>(null);
-  const onCustomQuestionEnter = () => {
+
+  const onCustomQuestionEnter = async () => {
     if (isLoading) return;
     const customQuestion = customQuestionRef.current?.value;
     if (!customQuestion) return;
     setIsLoading(true);
-    // TODO : Send custom question to server
-    setIsLoading(false);
+    setProfessorMedia({ type: 'video', src: professor.videoLoadingSrc });
+    const createVideoResponse = await axios.post(
+      'https://www.aca.o-r.kr/create-video',
+      {
+        question_query: customQuestion,
+        professor_id: professor.serverId,
+      }
+    );
+    if (createVideoResponse.status !== 200) {
+      return;
+    }
+    const subtitle = createVideoResponse.data.text;
+    const videoId = createVideoResponse.data.talk_id;
+    sendRequestWithRetries(videoId, subtitle);
   };
+
+  const sendRequestWithRetries = async (
+    videoId: string,
+    subtitle: string,
+    retries: number = 8,
+    interval: number = 2000
+  ): Promise<void> => {
+    try {
+      const res = await axios.post(
+        'https://www.aca.o-r.kr/specific',
+        { talk_id: videoId },
+        { responseType: 'blob' }
+      );
+
+      const videoUrl = URL.createObjectURL(res.data);
+      setProfessorSentence(subtitle);
+      setProfessorMedia({ type: 'video', src: videoUrl });
+      setIsLoading(false);
+      if (customQuestionRef.current) customQuestionRef.current.value = '';
+    } catch (err) {
+      if (retries > 0) {
+        // 재시도 대기
+        await new Promise((resolve) => setTimeout(resolve, interval));
+        // 재시도
+        await sendRequestWithRetries(videoId, subtitle, retries - 1, interval);
+      } else {
+        // 모든 재시도 실패
+        console.log(err);
+        setIsLoading(false);
+        setProfessorMedia({ type: 'image', src: professor.imageSrc });
+        setProfessorSentence(professor.intro);
+        if (customQuestionRef.current) customQuestionRef.current.value = '';
+      }
+    }
+  };
+
+  const videoRef = React.useRef<HTMLVideoElement>(null);
 
   return (
     <Modal
@@ -88,30 +137,30 @@ const Conversation = (props: ConversationProps) => {
           <Flex
             justify='center'
             bg={`url(${imgBgConversation})`}
-            bgSize='cover'
+            bgColor='#bdbdbd'
+            bgSize='contain'
             bgRepeat='no-repeat'
             backgroundPosition='center'
             h='62vh'
           >
-            {typeof professorMedia === 'string' ? (
+            {professorMedia.type == 'video' ? (
+              <Box
+                ref={videoRef}
+                as='video'
+                src={professorMedia.src}
+                h='62vh'
+                objectFit='contain'
+                alignSelf='flex-end'
+                autoPlay
+                loop={isLoading}
+              />
+            ) : (
               <Image
-                src={professor.imageSrc}
-                h='58vh'
+                src={professorMedia.src}
+                h='52vh'
                 objectFit='contain'
                 alignSelf='flex-end'
               />
-            ) : (
-              <>
-                <Box
-                  as='video'
-                  src={professorMedia.videoSrc}
-                  h='58vh'
-                  objectFit='contain'
-                  alignSelf='flex-end'
-                  autoPlay
-                />
-                <Box as='audio' src={professorMedia.audioSrc} autoPlay />
-              </>
             )}
           </Flex>
           <Flex
@@ -171,6 +220,7 @@ const Conversation = (props: ConversationProps) => {
               <SimpleGrid columns={2} spacing={4}>
                 {exampleQuestions.map((question) => (
                   <Box
+                    key={question.index}
                     position='relative'
                     onClick={() => onExampleQuestionClick(question)}
                     h='32px'
@@ -183,7 +233,7 @@ const Conversation = (props: ConversationProps) => {
                         height: '32px',
                         overflow: 'hidden',
                         position: 'absolute',
-                        background: 'transparent',
+                        background: '#00000000',
                         top: 0,
                         display: 'flex',
                         gap: '6px',

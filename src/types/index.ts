@@ -16,16 +16,26 @@ export type ProfessorInfoType = {
   imageSrc: string;
   imageResizedSrc: string;
   intro: string;
+  videoLoadingSrc: string;
+  serverId: number;
 };
 
-export type QuestionMediaType = {
+export type ExampleQuestionMediaType = {
   videoSrc: string;
-  audioSrc: string;
   subtitle: string;
 };
 
 export type ExampleQuestionInfoType = {
   index: number;
   question: string;
-  answer?: QuestionMediaType; // TODO : fill example answers
+  answer?: ExampleQuestionMediaType; // TODO : fill example answers
 };
+
+export type CustomQuestionMediaType = {
+  type: 'custom';
+  subtitle: string;
+  videoUrl: string;
+};
+
+export type QuestionMediaType = ExampleQuestionMediaType;
+//CustomQuestionMediaType;
