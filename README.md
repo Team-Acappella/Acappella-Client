@@ -5,7 +5,7 @@
 <br/><br/>
 
 ## Architecture
-<img src="./assets/architecture.png" style="height:300px">
+<img src="https://github.com/Team-Acappella/Acappella-Server/raw/main/assets/architecture.png" style="height:300px">
 
 ## Awards
 <img src="https://github.com/Team-Acappella/Acappella-Server/assets/53158200/1804b8b1-edc6-4fc9-84c4-5ec67c6fdba6" style="height:250px">
@@ -23,4 +23,4 @@ Second Prize at 2023 SKKU AI-Education Capstone Design Competition
 <br/><br/>
 
 ## For more information...
-Please refer to [this page](./assets/poster.pdf).
+Please refer to [this page](https://github.com/Team-Acappella/Acappella-Server/blob/main/assets/poster.pdf).
